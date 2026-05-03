@@ -5,6 +5,10 @@ import androidx.compose.ui.unit.dp
 /**
  * Kart ve ızgara için teknik sabitler.
  * Aralık aileleri: [FormSpacing]; köşe: [FormRadius].
+ *
+ * Alt gezinme: [com.krayirhan.benimformum.navigation.AppNavHost] içindeki `Scaffold` içerik alanı
+ * `padding(innerPadding)` ile zaten sistem + bottom bar inset’ini tüketir. Kaydırma sonuna eklenecek
+ * tek ek pay [navContentExtra] olmalıdır (LazyColumn `contentPadding` veya `Spacer`).
  */
 object FormTokens {
     val cardInnerHorizontal = 20.dp
@@ -16,8 +20,9 @@ object FormTokens {
     val gridGap = 14.dp
     val cardBorderWidth = 1.dp
     val cardCorner = FormRadius.card
-    /** Alt gezinme + rahat kaydırma (içerik kesilmesini önlemek için). */
-    val scrollBottomComfort = 112.dp
-    /** innerPadding.bottom’a eklenecek ek nefes. */
+    /**
+     * Scaffold `innerPadding` uygulandıktan sonra listenin sonuna eklenecek nefes payı.
+     * Inset henüz uygulanmıyorsa: `contentPadding(bottom = innerPadding.calculateBottomPadding() + navContentExtra)`.
+     */
     val navContentExtra = 32.dp
 }

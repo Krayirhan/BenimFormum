@@ -115,7 +115,7 @@ fun WeeklySummaryScreen(
                             .weight(1f)
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(Spacing.md),
-                        contentPadding = PaddingValues(bottom = FormSpacing.bottomScrollComfort)
+                        contentPadding = PaddingValues(bottom = FormSpacing.scrollContentTail)
                     ) {
                         item(key = "weekly-hero") {
                             WeeklyHeroCard(state)

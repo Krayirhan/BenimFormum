@@ -293,7 +293,7 @@ fun SettingsScreen(
 
             AboutCard(versionName = versionName)
 
-            Spacer(modifier = Modifier.height(FormSpacing.bottomScrollComfort))
+            Spacer(modifier = Modifier.height(FormSpacing.scrollContentTail))
         }
 
         AppSnackbarHost(

@@ -5,7 +5,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Form ekranları için aralıklar; alt gezinme üstü kaydırma payı dahil.
+ * Form ekranları için aralıklar.
+ *
+ * **Alt kaydırma:** Ana sekmelerde `Scaffold { innerPadding -> … .padding(innerPadding) }` ile inset
+ * zaten uygulanır; bu durumda [scrollContentTail] yeterlidir.
+ * İçerik tam pencereye yayılıp inset almıyorsa [scrollLazyBottomPadding] kullanın.
  */
 object FormSpacing {
     val xs = 4.dp
@@ -15,12 +19,16 @@ object FormSpacing {
     val xl = 32.dp
     val section = FormTokens.sectionSpacing
     val gridGap = FormTokens.gridGap
-    val bottomScrollComfort = FormTokens.scrollBottomComfort
-    val navContentExtra = FormTokens.navContentExtra
 
-    /** Scaffold alt inset + ekstra nefes (LazyColumn / scroll sonu). */
-    fun scrollBottomWithScaffold(scaffoldBottom: Dp): Dp = scaffoldBottom + navContentExtra
+    /** Scaffold alt inset sonrası liste/scroll sonu nefes payı. */
+    val scrollContentTail: Dp = FormTokens.navContentExtra
 
-    fun scrollContentPaddingValues(scaffoldBottom: Dp): PaddingValues =
-        PaddingValues(bottom = scrollBottomWithScaffold(scaffoldBottom))
+    val navContentExtra: Dp = FormTokens.navContentExtra
+
+    /**
+     * `LazyColumn` / `Modifier.padding` için: alttan inset uygulanmıyorsa
+     * `bottom = scaffoldBottomInset + navContentExtra`.
+     */
+    fun scrollLazyBottomPadding(scaffoldBottomInset: Dp): PaddingValues =
+        PaddingValues(bottom = scaffoldBottomInset + navContentExtra)
 }

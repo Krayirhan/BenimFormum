@@ -138,7 +138,7 @@ fun HistoryScreen(
                 .fillMaxWidth()
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(Spacing.md),
-            contentPadding = PaddingValues(bottom = FormSpacing.bottomScrollComfort)
+            contentPadding = PaddingValues(bottom = FormSpacing.scrollContentTail)
         ) {
             item(key = "history-insight") { HistoryInsightCard(state.insight) }
             if (state.waterStats.recordedDays > 0) {

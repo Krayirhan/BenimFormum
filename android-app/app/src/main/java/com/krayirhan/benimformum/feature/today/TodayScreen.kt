@@ -168,7 +168,7 @@ fun TodayScreen(
 
             DailyNoteCard(state = state, viewModel = viewModel)
 
-            Spacer(modifier = Modifier.height(FormSpacing.bottomScrollComfort))
+            Spacer(modifier = Modifier.height(FormSpacing.scrollContentTail))
         }
 
         AppSnackbarHost(

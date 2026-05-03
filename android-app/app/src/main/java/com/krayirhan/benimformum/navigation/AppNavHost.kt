@@ -249,6 +249,8 @@ private fun MainTabsNavHost() {
             }
         }
     ) { innerPadding ->
+        // Scaffold: üst çubuk + alt gezinme + sistem çentikleri burada tüketilir.
+        // Sekme ekranlarında liste/scroll sonuna yalnızca FormSpacing.scrollContentTail (32.dp) eklenir.
         Row(
             modifier = Modifier
                 .fillMaxSize()
