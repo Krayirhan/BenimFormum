@@ -47,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -77,10 +78,13 @@ import com.krayirhan.benimformum.core.util.AppDateFormatter
 import com.krayirhan.benimformum.domain.model.AppPreferences
 import com.krayirhan.benimformum.domain.model.TrackedMetric
 import com.krayirhan.benimformum.ui.theme.AppShapes
+import com.krayirhan.benimformum.ui.theme.BenimFormumTheme
+import com.krayirhan.benimformum.ui.theme.FormSpacing
+import com.krayirhan.benimformum.ui.theme.FormTokens
 import com.krayirhan.benimformum.ui.theme.NumericDisplayMedium
 import com.krayirhan.benimformum.ui.theme.NumericTitle
-import com.krayirhan.benimformum.ui.theme.BenimFormumTheme
 import com.krayirhan.benimformum.ui.theme.appColors
+import com.krayirhan.benimformum.ui.theme.brandFilterChipColors
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -129,7 +133,7 @@ fun TodayScreen(
                 .imePadding()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = Spacing.md, vertical = Spacing.md),
-            verticalArrangement = Arrangement.spacedBy(Spacing.md)
+            verticalArrangement = Arrangement.spacedBy(FormTokens.sectionSpacing)
         ) {
             HeaderRow(date = state.date)
 
@@ -164,7 +168,7 @@ fun TodayScreen(
 
             DailyNoteCard(state = state, viewModel = viewModel)
 
-            Spacer(modifier = Modifier.height(Spacing.xl))
+            Spacer(modifier = Modifier.height(FormSpacing.bottomScrollComfort))
         }
 
         AppSnackbarHost(
@@ -178,29 +182,40 @@ fun TodayScreen(
 
 @Composable
 private fun HeaderRow(date: String) {
-    val greeting = remember { AppDateFormatter.greeting() }
+    val hour = remember { java.time.LocalTime.now().hour }
+    val (titleRes, bodyRes) = when (hour) {
+        in 5..11 -> R.string.today_greeting_morning_title to R.string.today_greeting_morning_body
+        in 12..17 -> R.string.today_greeting_afternoon_title to R.string.today_greeting_afternoon_body
+        in 18..23 -> R.string.today_greeting_evening_title to R.string.today_greeting_evening_body
+        else -> R.string.today_greeting_night_title to R.string.today_greeting_night_body
+    }
     val friendly = remember(date) { AppDateFormatter.friendlyDate(date) }
     Column {
         Text(
-            text = greeting,
-            style = MaterialTheme.typography.titleLarge,
+            text = stringResource(titleRes),
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Medium),
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            text = if (friendly.isBlank()) {
-                stringResource(R.string.today_header_fallback)
-            } else {
-                friendly
-            },
+            text = stringResource(bodyRes),
             modifier = Modifier.padding(top = Spacing.xs),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        if (friendly.isNotBlank()) {
+            Text(
+                text = friendly,
+                modifier = Modifier.padding(top = Spacing.xs),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.92f)
+            )
+        }
     }
 }
 
 @Composable
 private fun DashboardHeroCard(state: DailyFormUiState) {
+    val appColors = MaterialTheme.appColors
     val score = state.formScore.coerceIn(0, 100)
     val progress = score / 100f
     val scoreTint = scoreColor(score)
@@ -211,54 +226,19 @@ private fun DashboardHeroCard(state: DailyFormUiState) {
         completed < total -> stringResource(R.string.today_hero_helper_partial)
         else -> stringResource(R.string.today_hero_helper_complete)
     }
-    val scoreContentDescription = stringResource(R.string.today_hero_score_a11y, score)
+    val showScoreRing = completed > 0
+    val scoreContentDescription = if (showScoreRing) {
+        stringResource(R.string.today_hero_score_a11y, score)
+    } else {
+        stringResource(R.string.today_hero_empty_score_a11y)
+    }
 
     AppCard(style = AppCardStyle.Hero) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(92.dp)
-                    .clearAndSetSemantics {
-                        contentDescription = scoreContentDescription
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    progress = { 1f },
-                    modifier = Modifier.size(92.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant,
-                    strokeWidth = 8.dp,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant
-                )
-                CircularProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier.size(92.dp),
-                    color = scoreTint,
-                    strokeWidth = 8.dp,
-                    trackColor = Color.Transparent
-                )
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = score.toString(),
-                        style = NumericDisplayMedium,
-                        color = scoreTint
-                    )
-                    Text(
-                        text = stringResource(R.string.today_hero_score_suffix),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-
-            Column(modifier = Modifier.weight(1f)) {
+        if (!showScoreRing) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = stringResource(R.string.today_hero_title),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Medium),
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
@@ -267,11 +247,86 @@ private fun DashboardHeroCard(state: DailyFormUiState) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Text(
+                    text = stringResource(R.string.today_hero_score_empty_title),
+                    modifier = Modifier.padding(top = Spacing.md),
+                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Medium),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = stringResource(R.string.today_hero_score_empty_body),
+                    modifier = Modifier.padding(top = Spacing.xs),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
                 CompletionStrip(
                     completed = completed,
                     total = total,
                     modifier = Modifier.padding(top = Spacing.md)
                 )
+            }
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(88.dp)
+                        .clearAndSetSemantics {
+                            contentDescription = scoreContentDescription
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        progress = { 1f },
+                        modifier = Modifier.size(88.dp),
+                        color = appColors.heroScoreTrack.copy(alpha = 0.45f),
+                        strokeWidth = 5.dp,
+                        trackColor = appColors.heroScoreTrack.copy(alpha = 0.45f)
+                    )
+                    if (progress > 0f) {
+                        CircularProgressIndicator(
+                            progress = { progress },
+                            modifier = Modifier.size(88.dp),
+                            color = scoreTint,
+                            strokeWidth = 5.dp,
+                            trackColor = Color.Transparent
+                        )
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = score.toString(),
+                            style = NumericDisplayMedium,
+                            color = scoreTint
+                        )
+                        Text(
+                            text = stringResource(R.string.today_hero_score_suffix),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f)
+                        )
+                    }
+                }
+
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.today_hero_title),
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Medium),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = helper,
+                        modifier = Modifier.padding(top = Spacing.xs),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    CompletionStrip(
+                        completed = completed,
+                        total = total,
+                        modifier = Modifier.padding(top = Spacing.md)
+                    )
+                }
             }
         }
     }
@@ -283,10 +338,23 @@ private fun CompletionStrip(
     total: Int,
     modifier: Modifier = Modifier
 ) {
+    val appColors = MaterialTheme.appColors
     val safeTotal = total.coerceAtLeast(1)
     val percent = ((completed.toFloat() / safeTotal) * 100).toInt()
-    val stripDescription = stringResource(R.string.today_completion_a11y, completed, total, percent)
-    val stripLabel = stringResource(R.string.today_completion_fields, completed, total)
+    val fraction = completed.toFloat() / safeTotal
+    val stripDescription = if (completed == 0) {
+        stringResource(R.string.today_completion_a11y_none)
+    } else {
+        stringResource(R.string.today_completion_a11y, completed, total, percent)
+    }
+    val stripLabel = when {
+        completed == 0 -> stringResource(R.string.today_completion_none)
+        completed >= safeTotal -> stringResource(R.string.today_completion_all)
+        else -> stringResource(R.string.today_completion_partial, completed, total)
+    }
+    val hint = if (completed == 0) {
+        stringResource(R.string.today_completion_hint, safeTotal)
+    } else null
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -302,21 +370,33 @@ private fun CompletionStrip(
             Text(
                 text = stripLabel,
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f)
             )
+            if (completed > 0) {
+                Text(
+                    text = "$percent%",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = appColors.progressAccent.copy(alpha = 0.88f)
+                )
+            }
+        }
+        if (hint != null) {
             Text(
-                text = "$percent%",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary
+                text = hint,
+                modifier = Modifier.padding(top = Spacing.xs),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.9f)
             )
         }
+        val barColor = if (fraction > 0f) appColors.progressAccent else Color.Transparent
         LinearProgressIndicator(
-            progress = { completed.toFloat() / safeTotal },
+            progress = { fraction },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = Spacing.xs),
-            color = MaterialTheme.colorScheme.primary,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant
+            color = barColor,
+            trackColor = appColors.heroScoreTrack.copy(alpha = if (fraction > 0f) 1f else 0.35f)
         )
     }
 }
@@ -371,8 +451,8 @@ private fun QuickWaterCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = Spacing.md),
-            color = appColors.water,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant
+            color = if (ratio > 0f) appColors.water else Color.Transparent,
+            trackColor = appColors.heroScoreTrack.copy(alpha = if (ratio > 0f) 1f else 0.32f)
         )
 
         Row(
@@ -393,7 +473,9 @@ private fun QuickWaterCard(
                 onClick = onAdd500,
                 modifier = Modifier.weight(1f),
                 enabled = !isAdding,
-                leadingIcon = Icons.Filled.Add
+                leadingIcon = Icons.Filled.Add,
+                borderColor = appColors.water.copy(alpha = 0.38f),
+                contentColor = appColors.water
             )
         }
     }
@@ -428,9 +510,9 @@ private fun MetricGrid(
         ).filter { it.trackedMetric in state.trackedMetrics }
     }
 
-    Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+    Column(verticalArrangement = Arrangement.spacedBy(FormTokens.gridGap)) {
         visibleMetrics.chunked(2).forEach { rowMetrics ->
-            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(FormTokens.gridGap)) {
                 rowMetrics.forEach { metric ->
                     MetricTileFor(
                         metric = metric,
@@ -456,7 +538,8 @@ private fun MetricTileFor(
     onMetricSelected: (TodayMetric) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val notEntered = stringResource(R.string.today_metric_not_selected)
+    val notEnteredSelect = stringResource(R.string.today_metric_not_selected)
+    val notEnteredAdd = stringResource(R.string.today_metric_add)
     val yes = stringResource(R.string.today_yes)
     val no = stringResource(R.string.today_no)
     val kg = stringResource(R.string.today_weight_unit)
@@ -466,7 +549,7 @@ private fun MetricTileFor(
             metric = metric,
             icon = Icons.Filled.MonitorWeight,
             label = label,
-            value = weightValue(state, notEntered, kg),
+            value = weightValue(state, notEnteredAdd, kg),
             entered = state.weightInput.isNotBlank(),
             selected = selected,
             iconTint = MaterialTheme.appColors.onWeightContainer,
@@ -479,7 +562,7 @@ private fun MetricTileFor(
             metric = metric,
             icon = Icons.Filled.Bedtime,
             label = label,
-            value = sleepValue(state, notEntered),
+            value = sleepValue(state, notEnteredSelect),
             entered = state.sleepQualityInput.isNotBlank(),
             selected = selected,
             iconTint = MaterialTheme.appColors.onSleepContainer,
@@ -492,7 +575,7 @@ private fun MetricTileFor(
             metric = metric,
             icon = Icons.Filled.Bolt,
             label = label,
-            value = energyValue(state, notEntered),
+            value = energyValue(state, notEnteredSelect),
             entered = state.energyScoreInput.isNotBlank(),
             selected = selected,
             iconTint = MaterialTheme.appColors.onEnergyContainer,
@@ -507,7 +590,7 @@ private fun MetricTileFor(
             metric = metric,
             icon = Icons.Filled.Mood,
             label = label,
-            value = moodValue(state, notEntered),
+            value = moodValue(state, notEnteredSelect),
             entered = state.moodScoreInput.isNotBlank(),
             selected = selected,
             iconTint = MaterialTheme.appColors.onMoodContainer,
@@ -522,7 +605,7 @@ private fun MetricTileFor(
             metric = metric,
             icon = Icons.Filled.WaterDrop,
             label = label,
-            value = waterValue(state, notEntered),
+            value = waterValue(state, notEnteredAdd),
             entered = state.waterTotalMl > 0,
             selected = selected,
             iconTint = MaterialTheme.appColors.onWaterContainer,
@@ -535,7 +618,7 @@ private fun MetricTileFor(
             metric = metric,
             icon = Icons.Filled.Cookie,
             label = label,
-            value = nightSnackValue(state, yes, no, notEntered),
+            value = nightSnackValue(state, yes, no, notEnteredSelect),
             entered = state.nightSnackDone != null,
             selected = selected,
             iconTint = MaterialTheme.appColors.onNightSnackContainer,
@@ -556,29 +639,29 @@ private fun MetricTile(
     selected: Boolean,
     onClick: (TodayMetric) -> Unit,
     modifier: Modifier = Modifier,
-    iconTint: Color = MaterialTheme.colorScheme.primary,
-    iconBackground: Color = MaterialTheme.colorScheme.primaryContainer,
+    iconTint: Color? = null,
+    iconBackground: Color? = null,
     valueColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
+    val appColors = MaterialTheme.appColors
+    val resolvedIconTint = iconTint ?: appColors.privacy
+    val resolvedIconBackground = iconBackground ?: appColors.privacyContainer
     val borderColor = if (selected) {
-        MaterialTheme.colorScheme.primary
+        appColors.privacy.copy(alpha = 0.85f)
     } else {
-        MaterialTheme.colorScheme.outlineVariant
+        MaterialTheme.colorScheme.outline.copy(alpha = 0.28f)
     }
     val containerColor = if (selected) {
-        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.18f)
+        appColors.privacyContainer.copy(alpha = 0.35f)
     } else {
-        MaterialTheme.colorScheme.surfaceContainerLow
+        MaterialTheme.colorScheme.surface
     }
-    val statusText = stringResource(
-        if (entered) R.string.today_status_entered else R.string.today_status_missing
-    )
     val a11yLabel = metricTileAccessibilityLabel(label, value, entered, selected)
 
     Surface(
         modifier = modifier
             .minimumInteractiveComponentSize()
-            .heightIn(min = 112.dp)
+            .heightIn(min = FormTokens.metricTileMinHeight)
             .semantics(mergeDescendants = true) {
                 contentDescription = a11yLabel
             }
@@ -586,10 +669,13 @@ private fun MetricTile(
         shape = AppShapes.card,
         color = containerColor,
         contentColor = MaterialTheme.colorScheme.onSurface,
-        border = BorderStroke(0.5.dp, borderColor)
+        border = BorderStroke(FormTokens.cardBorderWidth, borderColor)
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.md),
+            modifier = Modifier.padding(
+                horizontal = FormTokens.metricTilePaddingHorizontal,
+                vertical = FormTokens.metricTilePaddingVertical
+            ),
             verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             Row(
@@ -597,25 +683,27 @@ private fun MetricTile(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconBubble(icon = icon, tint = iconTint, background = iconBackground)
-                Text(
-                    text = statusText,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                IconBubble(icon = icon, tint = resolvedIconTint, background = resolvedIconBackground)
+                if (entered) {
+                    Text(
+                        text = stringResource(R.string.today_status_entered),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Medium),
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleMedium,
+                style = NumericTitle,
                 color = valueColor,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -687,7 +775,9 @@ private fun WaterEditor(
             onClick = viewModel::addWaterQuick500,
             modifier = Modifier.weight(1f),
             enabled = !isAdding,
-            leadingIcon = Icons.Filled.Add
+            leadingIcon = Icons.Filled.Add,
+            borderColor = MaterialTheme.appColors.water.copy(alpha = 0.38f),
+            contentColor = MaterialTheme.appColors.water
         )
     }
 }
@@ -804,12 +894,14 @@ private fun NightSnackEditor(
             FilterChip(
                 selected = state.nightSnackDone == false,
                 onClick = { viewModel.onNightSnackChanged(false) },
-                label = { Text(stringResource(R.string.today_no)) }
+                label = { Text(stringResource(R.string.today_no)) },
+                colors = brandFilterChipColors()
             )
             FilterChip(
                 selected = state.nightSnackDone == true,
                 onClick = { viewModel.onNightSnackChanged(true) },
-                label = { Text(stringResource(R.string.today_yes)) }
+                label = { Text(stringResource(R.string.today_yes)) },
+                colors = brandFilterChipColors()
             )
         }
     }
@@ -844,6 +936,7 @@ private fun DailyNoteCard(
             loading = state.isSaving,
             leadingIcon = if (state.isSaving) null else Icons.Filled.Save
         )
+        Spacer(modifier = Modifier.height(FormTokens.navContentExtra))
     }
 }
 
@@ -881,7 +974,7 @@ private fun metricTileAccessibilityLabel(
     selected: Boolean
 ): String {
     val statusWord = stringResource(
-        if (entered) R.string.today_status_entered else R.string.today_status_missing
+        if (entered) R.string.today_status_entered else R.string.today_a11y_not_entered
     )
     val prefix = if (selected) {
         stringResource(R.string.today_metric_tile_a11y_selected_prefix)

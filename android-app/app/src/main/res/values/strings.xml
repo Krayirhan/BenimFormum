@@ -35,22 +35,37 @@
     <string name="metric_night_snack">Gece</string>
 
     <!-- Today — başlıklar ve kritik CTA -->
-    <string name="today_header_fallback">Bugüne sakin bir başlangıç yapabilirsin.</string>
+    <string name="today_greeting_morning_title">Günaydın</string>
+    <string name="today_greeting_afternoon_title">İyi günler</string>
+    <string name="today_greeting_evening_title">İyi akşamlar</string>
+    <string name="today_greeting_night_title">İyi geceler</string>
+    <string name="today_greeting_morning_body">Bugüne küçük bir kayıtla başlayabilirsin.</string>
+    <string name="today_greeting_afternoon_body">Bugünün ritmini sakinçe kaydedebilirsin.</string>
+    <string name="today_greeting_evening_body">Günü sakin bir notla kapatabilirsin.</string>
+    <string name="today_greeting_night_body">İstersen bugünden kalanları sessizce kaydedebilirsin.</string>
     <string name="today_hero_score_suffix">/ 100</string>
     <string name="today_hero_title">Günün ritmi</string>
-    <string name="today_hero_helper_none">Bugün için ilk küçük kaydını ekleyebilirsin.</string>
-    <string name="today_hero_helper_partial">Günün kaydı oluşuyor; eksik alanları sakin biçimde tamamlayabilirsin.</string>
-    <string name="today_hero_helper_complete">Bugünün temel alanları tamamlandı.</string>
+    <string name="today_hero_helper_none">Bugün için ilk kaydını ekleyebilirsin.</string>
+    <string name="today_hero_helper_partial">Bugünün ritmi oluşuyor; istediğin zaman diğer alanlara da ekleyebilirsin.</string>
+    <string name="today_hero_helper_complete">Bugün seçtiğin alanlarda kayıt var.</string>
     <string name="today_hero_score_a11y">Günün formu, %1$d puan, 100 üzerinden</string>
-    <string name="today_completion_fields">%1$d / %2$d alan tamamlandı</string>
-    <string name="today_completion_a11y">Tamamlanan alanlar %1$d bölü %2$d, yüzde %3$d</string>
+    <string name="today_hero_score_empty_title">Henüz skor yok</string>
+    <string name="today_hero_score_empty_body">İlk kaydını eklediğinde günün ritmi oluşacak.</string>
+    <string name="today_hero_empty_score_a11y">Günün ritmi skoru henüz yok; kayıt eklediğinde burada görünür.</string>
+    <string name="today_completion_none">Henüz kayıt yok</string>
+    <string name="today_completion_hint">İstersen %1$d alandan biriyle başlayabilirsin.</string>
+    <string name="today_completion_partial">%1$d / %2$d alanda not var</string>
+    <string name="today_completion_all">Bugün takip ettiğin alanlarda kayıt var.</string>
+    <string name="today_completion_a11y">Kayıtlı alanlar %1$d bölü %2$d, yüzde %3$d</string>
+    <string name="today_completion_a11y_none">Henüz bugün için kayıt yok</string>
     <string name="today_water_tracking">Su takibi</string>
-    <string name="today_water_goal_line">Hedef %1$s ml</string>
+    <string name="today_water_goal_line">Günlük hedef %1$s ml</string>
     <string name="today_water_add_250">+250 ml</string>
     <string name="today_water_add_500">+500 ml</string>
-    <string name="today_status_entered">Girildi</string>
-    <string name="today_status_missing">Eksik</string>
+    <string name="today_status_entered">Kaydedildi</string>
+    <string name="today_a11y_not_entered">Henüz yok</string>
     <string name="today_metric_not_selected">Seç</string>
+    <string name="today_metric_add">Ekle</string>
     <string name="today_metric_tile_a11y">%1$s%2$s, %3$s, %4$s</string>
     <string name="today_metric_tile_a11y_selected_prefix">Seçili. </string>
     <string name="today_save_metric">Kaydı kaydet</string>
@@ -73,7 +88,7 @@
     <string name="today_no">Hayır</string>
     <string name="today_yes">Evet</string>
     <string name="today_note_title">Günün notu</string>
-    <string name="today_note_subtitle">İstersen kısa bir notla kaydı tamamlayabilirsin.</string>
+    <string name="today_note_subtitle">İstersen kısa bir not ekleyebilirsin.</string>
     <string name="today_note_field_label">Not (isteğe bağlı)</string>
     <string name="today_editor_water_title">Su ekle</string>
     <string name="today_editor_water_subtitle">Yukarıdaki su kartında da aynı kısayollar var; buradan da ekleyebilirsin.</string>
@@ -102,19 +117,35 @@
     <string name="settings_dynamic_color_title">Material You renkleri</string>
     <string name="settings_dynamic_color_subtitle">Android 12 ve üzeri: duvar kağıdı paletine uyum. Su ve metrik renkleri sabit kalır.</string>
     <string name="settings_tracking_title">Takip alanları</string>
-    <string name="settings_tracking_subtitle">Kapattığın metrikler Bugün ekranındaki ızgarada ve tamamlanma sayacında görünmez.</string>
+    <string name="settings_tracking_subtitle">Kapattığın metrikler Bugün ekranındaki ızgarada ve günlük özet satırında görünmez.</string>
     <string name="settings_data_title">Verilerim</string>
     <string name="settings_data_desc">Günlük form ve su kayıtların yalnızca bu cihazda tutulur. Bulut veya hesap yok.</string>
     <string name="settings_privacy_title">Gizlilik</string>
     <string name="settings_privacy_desc">Veriler yerel veritabanında saklanır. Hesap, reklam veya üçüncü taraf paylaşımı yok.</string>
-    <string name="settings_export_card_title">Verilerin sende</string>
-    <string name="settings_export_card_subtitle">Dosyayı cihazında seçtiğin konuma kaydedebilirsin.</string>
-    <string name="settings_export_json">Tüm veriyi JSON olarak kaydet</string>
-    <string name="settings_export_csv_forms">Günlük formları CSV kaydet</string>
-    <string name="settings_export_csv_water">Su kayıtlarını CSV kaydet</string>
+    <string name="settings_export_card_title">Verilerin sende kalır</string>
+    <string name="settings_export_card_subtitle">Dosyayı cihazında seçtiğin konuma indirebilirsin.</string>
+    <string name="settings_export_json">Tüm veriyi JSON indir</string>
+    <string name="settings_export_csv_forms">Formları CSV indir</string>
+    <string name="settings_export_csv_water">Su kayıtlarını CSV indir</string>
     <string name="settings_export_footer">Dışa aktarma yereldir; veri yüklenmez, internet gerekmez.</string>
     <string name="settings_about_app_line">%1$s — günlük form ve su takibi.</string>
     <string name="settings_about_version">Sürüm %1$s</string>
     <string name="settings_about_version_unknown">Sürüm bilgisi alınamadı.</string>
     <string name="settings_about_privacy_placeholder">Ayrıntılı gizlilik metni veya politika bağlantısı buraya eklenebilir. Veriler yalnızca bu cihazda tutulur.</string>
+
+    <!-- Geçmiş — su kartı ve düşük veri -->
+    <string name="history_water_title">Günlük su</string>
+    <string name="history_water_subtitle_goal">Kesik çizgi kişisel %1$s ml hedefini gösterir.</string>
+    <string name="history_water_days_with_records">Su kaydı olan gün: %1$d</string>
+    <string name="history_water_stat_avg">Ortalama</string>
+    <string name="history_water_stat_min">En düşük</string>
+    <string name="history_water_stat_max">En yüksek</string>
+    <string name="history_water_stat_target_days">Hedefe ulaşan</string>
+    <string name="history_water_stat_target_days_value">%1$d / %2$d gün</string>
+    <string name="history_water_summary_avg">Su kaydı olan %1$d günün ortalaması %2$s ml.</string>
+    <string name="history_water_low_data_title">Grafik için veri az</string>
+    <string name="history_water_low_data_body">Birkaç gün daha kayıt eklediğinde çubuk grafik daha anlamlı görünecek.</string>
+
+    <!-- Haftalık — üst açıklama -->
+    <string name="weekly_intro_line">Son 7 günden kural tabanlı, sakin bir özet.</string>
 </resources>

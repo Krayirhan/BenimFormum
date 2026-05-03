@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.foundation.background
 import androidx.compose.ui.unit.dp
 import com.krayirhan.benimformum.core.ui.Spacing
+import com.krayirhan.benimformum.ui.theme.appColors
 
 @Composable
 fun MetricRow(
@@ -26,10 +27,13 @@ fun MetricRow(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
-    iconTint: Color = MaterialTheme.colorScheme.primary,
-    iconBackground: Color = MaterialTheme.colorScheme.primaryContainer,
+    iconTint: Color? = null,
+    iconBackground: Color? = null,
     valueColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
+    val appColors = MaterialTheme.appColors
+    val resolvedTint = iconTint ?: appColors.privacy
+    val resolvedBg = iconBackground ?: appColors.privacyContainer
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -40,13 +44,13 @@ fun MetricRow(
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
-                .background(iconBackground),
+                .background(resolvedBg),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = label,
-                tint = iconTint,
+                tint = resolvedTint,
                 modifier = Modifier.size(20.dp)
             )
         }

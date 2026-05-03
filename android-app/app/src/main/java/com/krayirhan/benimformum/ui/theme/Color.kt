@@ -3,64 +3,81 @@ package com.krayirhan.benimformum.ui.theme
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
-val MintPrimary = Color(0xFF2F7D69)
-val MintOnPrimary = Color(0xFFFFFFFF)
-val MintPrimaryContainer = Color(0xFFD5F3E8)
-val MintOnPrimaryContainer = Color(0xFF073729)
+/**
+ * Ürün renk tablosu (arka plan, yüzey, birincil, su, tipografi, sınır).
+ * Material [lightColorScheme]/[darkColorScheme] ve [AppColorScheme] buradan beslenir.
+ */
 
-val AmberSecondary = Color(0xFF94612A)
-val AmberOnSecondary = Color(0xFFFFFFFF)
-val AmberSecondaryContainer = Color(0xFFFFDDB8)
-val AmberOnSecondaryContainer = Color(0xFF331F05)
+// —— Material ana eksen (yeşim birincil + kum + adaçayı) ——
+val SteelPrimary = Color(0xFF3D7A5E)
+val SteelOnPrimary = Color(0xFFFFFFFF)
+val SteelPrimaryContainer = Color(0xFFDDEFE6)
+val SteelOnPrimaryContainer = Color(0xFF1F2A24)
 
-val RoseTertiary = Color(0xFFA65A78)
-val RoseOnTertiary = Color(0xFFFFFFFF)
-val RoseTertiaryContainer = Color(0xFFFFD9E5)
-val RoseOnTertiaryContainer = Color(0xFF3E1F2C)
+val SandSecondary = Color(0xFFD4A574)
+val SandOnSecondary = Color(0xFF1A140E)
+val SandSecondaryContainer = Color(0xFFFFE8D4)
+val SandOnSecondaryContainer = Color(0xFF4A3418)
 
-val SkyAccent = Color(0xFF2F7EA7)
-val SkyAccentContainer = Color(0xFFC9E5F4)
-val OnSkyAccentContainer = Color(0xFF082F42)
+val SageTertiary = Color(0xFF5C8F7B)
+val SageOnTertiary = Color(0xFFFFFFFF)
+val SageTertiaryContainer = Color(0xFFD4EBE2)
+val SageOnTertiaryContainer = Color(0xFF153326)
 
-val LightBackground = Color(0xFFF7FAF7)
-val LightOnBackground = Color(0xFF17211D)
+/** Su metriği ve ilerleme çizgileri için mavi-yeşil vurgu. */
+val SkyAccent = Color(0xFF3A8FB7)
+val SkyAccentContainer = Color(0xFFD4EBF4)
+val OnSkyAccentContainer = Color(0xFF0C3040)
+
+// —— Açık tema yüzeyleri ——
+val LightBackground = Color(0xFFF7F9F8)
+val LightOnBackground = Color(0xFF1F2A24)
 val LightSurface = Color(0xFFFFFFFF)
-val LightOnSurface = Color(0xFF17211D)
-val LightSurfaceVariant = Color(0xFFE7EFEA)
-val LightOnSurfaceVariant = Color(0xFF52615B)
-val LightOutline = Color(0xFFB7C7C0)
-val LightOutlineVariant = Color(0xFFDCE8E2)
+val LightOnSurface = Color(0xFF1F2A24)
+val LightSurfaceVariant = Color(0xFFF2F7F4)
+val LightOnSurfaceVariant = Color(0xFF5F6B64)
+val LightOutline = Color(0xFFD8E6DE)
+val LightOutlineVariant = Color(0xFFE8F1EC)
 
-val DarkPrimary = Color(0xFF7BD7BB)
-val DarkOnPrimary = Color(0xFF00382A)
-val DarkPrimaryContainer = Color(0xFF1A4B3E)
-val DarkOnPrimaryContainer = Color(0xFFC2F2E0)
-val DarkSecondary = Color(0xFFFFC98F)
-val DarkOnSecondary = Color(0xFF4A2800)
-val DarkSecondaryContainer = Color(0xFF5D3710)
-val DarkOnSecondaryContainer = Color(0xFFFFE0BD)
-val DarkTertiary = Color(0xFFF4B6CC)
-val DarkOnTertiary = Color(0xFF4A2032)
-val DarkTertiaryContainer = Color(0xFF5C2E40)
-val DarkOnTertiaryContainer = Color(0xFFFFD9E5)
+/** Günün ritmi kartı ve yumuşak yüzeyler. */
+val FormHeroCardFill = Color(0xFFE8F5EF)
+val FormHeroCardBorder = Color(0xFFD8E6DE)
+val FormHeroCardFillDark = Color(0xFF23352C)
+val FormHeroCardBorderDark = Color(0xFF2E4A3A)
 
-val DarkBackground = Color(0xFF101714)
-val DarkOnBackground = Color(0xFFE3ECE7)
-val DarkSurface = Color(0xFF18211D)
-val DarkOnSurface = Color(0xFFE3ECE7)
-val DarkSurfaceVariant = Color(0xFF24302B)
-val DarkOnSurfaceVariant = Color(0xFFB9C8C1)
-val DarkOutline = Color(0xFF3B4A44)
-val DarkOutlineVariant = Color(0x29FFFFFF)
+// —— Koyu tema (marka yeşili + sakin yüzeyler) ——
+val DarkPrimary = Color(0xFF5AAD85)
+val DarkOnPrimary = Color(0xFF0F1612)
+val DarkPrimaryContainer = Color(0xFF2E4A3A)
+val DarkOnPrimaryContainer = Color(0xFFEAF2EA)
+
+val DarkSecondary = Color(0xFFEDD9A8)
+val DarkOnSecondary = Color(0xFF1E1305)
+val DarkSecondaryContainer = Color(0xFF533E20)
+val DarkOnSecondaryContainer = Color(0xFFFDE4CA)
+
+val DarkTertiary = Color(0xFF96D3C1)
+val DarkOnTertiary = Color(0xFF051D17)
+val DarkTertiaryContainer = Color(0xFF1D4D40)
+val DarkOnTertiaryContainer = Color(0xFFD0F0E5)
+
+val DarkBackground = Color(0xFF111F19)
+val DarkOnBackground = Color(0xFFEAF2EA)
+val DarkSurface = Color(0xFF1A2E25)
+val DarkOnSurface = Color(0xFFEAF2EA)
+val DarkSurfaceVariant = Color(0xFF243830)
+val DarkOnSurfaceVariant = Color(0xFFA8D8C0)
+val DarkOutline = Color(0xFF2E4A3A)
+val DarkOutlineVariant = Color(0xFF2E4A3A)
 
 val ErrorRed = Color(0xFFFFB4AB)
 val OnErrorRed = Color(0xFF690005)
-val LightErrorRed = Color(0xFFBA1A1A)
+val LightErrorRed = Color(0xFFB3261E)
 val LightOnErrorRed = Color(0xFFFFFFFF)
 
-val ScoreLow = Color(0xFFF77D7D)
-val ScoreMid = Color(0xFFFFB877)
-val ScoreHigh = Color(0xFF4CAF8F)
+val ScoreLow = Color(0xFFD4897A)
+val ScoreMid = Color(0xFFC9A06A)
+val ScoreHigh = Color(0xFF5A9E82)
 
 @Immutable
 data class AppColorScheme(
@@ -79,72 +96,102 @@ data class AppColorScheme(
     val weight: Color,
     val weightContainer: Color,
     val onWeightContainer: Color,
-    /** Gece atıştırması; enerji paletinden ayrı sıcak “bisküvi” tonu. */
     val nightSnack: Color,
     val nightSnackContainer: Color,
     val onNightSnackContainer: Color,
     val privacy: Color,
+    val onPrivacy: Color,
     val privacyContainer: Color,
     val onPrivacyContainer: Color,
-    /** Haftalık özet hero halkası / sayı; gizlilik semantiğinden ayrı (Sprint 4 — S4-1). */
     val progressAccent: Color,
     val scoreLow: Color,
     val scoreMid: Color,
-    val scoreHigh: Color
+    val scoreHigh: Color,
+    val insightCardFill: Color,
+    val insightCardBorder: Color,
+    val heroScoreTrack: Color
 )
 
+val MetricSleep = Color(0xFF786BC4)
+val MetricSleepContainer = Color(0xFFEDE9F7)
+val OnMetricSleepContainer = Color(0xFF251A37)
+
+val MetricEnergy = Color(0xFFD6A13D)
+val MetricEnergyContainer = Color(0xFFFDF0D8)
+val OnMetricEnergyContainer = Color(0xFF3D2A08)
+
+val MetricMood = Color(0xFFC46F5B)
+val MetricMoodContainer = Color(0xFFFBE8E4)
+val OnMetricMoodContainer = Color(0xFF3D1F18)
+
+val MetricWeight = Color(0xFF8B7E74)
+val MetricWeightContainer = Color(0xFFF2EEEB)
+val OnMetricWeightContainer = Color(0xFF2A2522)
+
+val MetricNightSnack = Color(0xFF8FAE9A)
+val MetricNightSnackContainer = Color(0xFFE8F2EC)
+val OnMetricNightSnackContainer = Color(0xFF1F2A24)
+
 val LightAppColorScheme = AppColorScheme(
-    water = Color(0xFF2F7EA7),
-    waterContainer = Color(0xFFC9E5F4),
-    onWaterContainer = Color(0xFF082F42),
-    sleep = Color(0xFF5967A8),
-    sleepContainer = Color(0xFFE0E5FF),
-    onSleepContainer = Color(0xFF172153),
-    energy = Color(0xFF94612A),
-    energyContainer = Color(0xFFFFDDB8),
-    onEnergyContainer = Color(0xFF331F05),
-    mood = Color(0xFFA65A78),
-    moodContainer = Color(0xFFFFD9E5),
-    onMoodContainer = Color(0xFF3E1F2C),
-    weight = Color(0xFF63706A),
-    weightContainer = Color(0xFFE0E8E3),
-    onWeightContainer = Color(0xFF1E2A25),
-    nightSnack = Color(0xFF8B6B4A),
-    nightSnackContainer = Color(0xFFF5EBE3),
-    onNightSnackContainer = Color(0xFF2A1E14),
-    privacy = Color(0xFF2F7D69),
-    privacyContainer = Color(0xFFD5F3E8),
-    onPrivacyContainer = Color(0xFF073729),
-    progressAccent = SkyAccent,
-    scoreLow = Color(0xFFC84747),
-    scoreMid = Color(0xFF94612A),
-    scoreHigh = Color(0xFF2F7D69)
+    water = SkyAccent,
+    waterContainer = SkyAccentContainer,
+    onWaterContainer = OnSkyAccentContainer,
+    sleep = MetricSleep,
+    sleepContainer = MetricSleepContainer,
+    onSleepContainer = OnMetricSleepContainer,
+    energy = MetricEnergy,
+    energyContainer = MetricEnergyContainer,
+    onEnergyContainer = OnMetricEnergyContainer,
+    mood = MetricMood,
+    moodContainer = MetricMoodContainer,
+    onMoodContainer = OnMetricMoodContainer,
+    weight = MetricWeight,
+    weightContainer = MetricWeightContainer,
+    onWeightContainer = OnMetricWeightContainer,
+    nightSnack = MetricNightSnack,
+    nightSnackContainer = MetricNightSnackContainer,
+    onNightSnackContainer = OnMetricNightSnackContainer,
+    privacy = SteelPrimary,
+    onPrivacy = SteelOnPrimary,
+    privacyContainer = SteelPrimaryContainer,
+    onPrivacyContainer = SteelOnPrimaryContainer,
+    progressAccent = SteelPrimary,
+    scoreLow = Color(0xFFA84949),
+    scoreMid = Color(0xFFC9975F),
+    scoreHigh = Color(0xFF4B7E6A),
+    insightCardFill = LightSurfaceVariant,
+    insightCardBorder = LightOutline,
+    heroScoreTrack = Color(0xFFD8E6DE)
 )
 
 val DarkAppColorScheme = AppColorScheme(
-    water = Color(0xFF8BC9E8),
-    waterContainer = Color(0xFF143345),
-    onWaterContainer = Color(0xFFC9E5F4),
-    sleep = Color(0xFFAEBBFF),
-    sleepContainer = Color(0xFF29335F),
-    onSleepContainer = Color(0xFFE1E6FF),
-    energy = Color(0xFFFFC98F),
-    energyContainer = Color(0xFF5D3710),
-    onEnergyContainer = Color(0xFFFFE0BD),
-    mood = Color(0xFFF4B6CC),
-    moodContainer = Color(0xFF5C2E40),
-    onMoodContainer = Color(0xFFFFD9E5),
-    weight = Color(0xFFB7C6BF),
-    weightContainer = Color(0xFF2D3934),
-    onWeightContainer = Color(0xFFE0E8E3),
-    nightSnack = Color(0xFFD4B8A0),
-    nightSnackContainer = Color(0xFF403328),
-    onNightSnackContainer = Color(0xFFF5EBE3),
-    privacy = Color(0xFF7BD7BB),
-    privacyContainer = Color(0xFF1A4B3E),
-    onPrivacyContainer = Color(0xFFC2F2E0),
-    progressAccent = Color(0xFF5DADE2),
-    scoreLow = Color(0xFFFF8D8D),
-    scoreMid = Color(0xFFFFC98F),
-    scoreHigh = Color(0xFF7BD7BB)
+    water = Color(0xFF7EC4E8),
+    waterContainer = Color(0xFF124456),
+    onWaterContainer = Color(0xFFD4EBF4),
+    sleep = Color(0xFFB4A8E8),
+    sleepContainer = Color(0xFF3A3258),
+    onSleepContainer = Color(0xFFEDE9F7),
+    energy = Color(0xFFE8C46A),
+    energyContainer = Color(0xFF5C4518),
+    onEnergyContainer = Color(0xFFFDF0D8),
+    mood = Color(0xFFE89A8A),
+    moodContainer = Color(0xFF5C3228),
+    onMoodContainer = Color(0xFFFBE8E4),
+    weight = Color(0xFFC4B8B0),
+    weightContainer = Color(0xFF3A342F),
+    onWeightContainer = Color(0xFFF2EEEB),
+    nightSnack = Color(0xFFA8C9B6),
+    nightSnackContainer = Color(0xFF2A4034),
+    onNightSnackContainer = Color(0xFFE8F2EC),
+    privacy = DarkPrimary,
+    onPrivacy = DarkOnPrimary,
+    privacyContainer = DarkPrimaryContainer,
+    onPrivacyContainer = DarkOnPrimaryContainer,
+    progressAccent = DarkPrimary,
+    scoreLow = Color(0xFFFF9F96),
+    scoreMid = Color(0xFFEDD9A8),
+    scoreHigh = Color(0xFF96D3C1),
+    insightCardFill = DarkSurfaceVariant,
+    insightCardBorder = DarkOutline,
+    heroScoreTrack = Color(0xFF2E4A3A)
 )

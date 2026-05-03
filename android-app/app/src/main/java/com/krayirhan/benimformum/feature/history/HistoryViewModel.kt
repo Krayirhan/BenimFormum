@@ -173,13 +173,13 @@ class HistoryViewModel @Inject constructor(
             )
 
             waterStats.recordedDays > 0 && waterStats.targetReachedDays == 0 -> HistoryInsightUi(
-                title = "Su hedefi ayar sinyali veriyor",
-                description = "$rangeLabel içinde su hedefine ulaşılan gün yok. Hedefini veya kayıt rutinini Ayarlar’dan gözden geçirebilirsin."
+                title = "Su kayıtların devam ediyor",
+                description = "$rangeLabel içinde günlük su hedefinin üzerinde olduğun gün henüz görünmüyor. İstersen hedefini veya kayıt sıklığını Ayarlar’dan yumuşakça güncelleyebilirsin."
             )
 
             waterStats.targetReachedDays > 0 -> HistoryInsightUi(
-                title = "Hedefe ulaşılan günler var",
-                description = "$rangeLabel içinde su hedefin ${waterStats.targetReachedDays} gün karşılandı. Diğer veriler günlük ayrıntılarda listelenir."
+                title = "Su hedefinle uyumlu günler var",
+                description = "$rangeLabel içinde günlük su hedefinin üzerinde olduğun ${waterStats.targetReachedDays} gün var. Diğer veriler günlük ayrıntılarda listelenir."
             )
 
             else -> HistoryInsightUi(

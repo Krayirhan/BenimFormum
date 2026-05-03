@@ -8,16 +8,16 @@
         android:fillColor="#FFFFFF"
         android:pathData="M34,24 H74 Q81,24 81,31 V77 Q81,84 74,84 H34 Q27,84 27,77 V31 Q27,24 34,24 Z" />
     <path
-        android:fillColor="#C9EEE1"
+        android:fillColor="#DDEFE6"
         android:pathData="M34,24 H74 Q81,24 81,31 V40 H27 V31 Q27,24 34,24 Z" />
     <path
-        android:fillColor="#326B58"
+        android:fillColor="#3D7A5E"
         android:pathData="M38,51 H63 Q66,51 66,54 Q66,57 63,57 H38 Q35,57 35,54 Q35,51 38,51 Z" />
     <path
-        android:fillColor="#84A89A"
+        android:fillColor="#5F6B64"
         android:pathData="M38,63 H56 Q59,63 59,66 Q59,69 56,69 H38 Q35,69 35,66 Q35,63 38,63 Z" />
     <path
-        android:fillColor="#4CAF8F"
+        android:fillColor="#3A8FB7"
         android:pathData="M71,50 C65,57 63,61 63,66 C63,72 67,76 72,76 C77,76 81,72 81,66 C81,61 77,56 71,50 Z" />
     <path
         android:fillColor="#FFFFFF"

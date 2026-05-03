@@ -1,5 +1,6 @@
 package com.krayirhan.benimformum.feature.history
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,9 +41,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.krayirhan.benimformum.R
 import com.krayirhan.benimformum.core.ui.Spacing
 import com.krayirhan.benimformum.core.ui.components.AppCard
 import com.krayirhan.benimformum.core.ui.components.AppCardStyle
+import com.krayirhan.benimformum.core.ui.components.LowDataNoticeCard
 import com.krayirhan.benimformum.core.ui.components.BarChart
 import com.krayirhan.benimformum.core.ui.components.EmptyState
 import com.krayirhan.benimformum.core.ui.components.LineChart
@@ -51,6 +55,7 @@ import com.krayirhan.benimformum.core.util.AppDateFormatter
 import com.krayirhan.benimformum.domain.usecase.WeightTrendPoint
 import com.krayirhan.benimformum.ui.theme.AppShapes
 import com.krayirhan.benimformum.ui.theme.BenimFormumTheme
+import com.krayirhan.benimformum.ui.theme.FormSpacing
 import com.krayirhan.benimformum.ui.theme.appColors
 import java.text.NumberFormat
 import java.util.Locale
@@ -61,6 +66,7 @@ private data class HistoryStat(
     val value: String
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HistoryScreen(
     contentPadding: PaddingValues = PaddingValues(),
@@ -68,6 +74,7 @@ fun HistoryScreen(
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val appColors = MaterialTheme.appColors
 
     Column(
         modifier = Modifier
@@ -98,12 +105,12 @@ fun HistoryScreen(
                     onClick = { viewModel.onRangeSelected(range) },
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     colors = SegmentedButtonDefaults.colors(
-                        activeContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                        activeContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        activeBorderColor = MaterialTheme.colorScheme.primary,
+                        activeContainerColor = appColors.privacyContainer,
+                        activeContentColor = appColors.onPrivacyContainer,
+                        activeBorderColor = appColors.privacy,
                         inactiveContainerColor = MaterialTheme.colorScheme.surface,
                         inactiveContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        inactiveBorderColor = MaterialTheme.colorScheme.outlineVariant
+                        inactiveBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.22f)
                     )
                 ) {
                     Text(label)
@@ -131,7 +138,7 @@ fun HistoryScreen(
                 .fillMaxWidth()
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(Spacing.md),
-            contentPadding = PaddingValues(bottom = Spacing.xl)
+            contentPadding = PaddingValues(bottom = FormSpacing.bottomScrollComfort)
         ) {
             item(key = "history-insight") { HistoryInsightCard(state.insight) }
             if (state.waterStats.recordedDays > 0) {
@@ -179,41 +186,57 @@ private fun WaterTrendCard(state: HistoryUiState) {
     val chartEntries = state.entries.reversed()
     val waterValues = chartEntries.map { it.waterMl.toFloat() }
     val stats = state.waterStats
+    val targetDaysLabel = stringResource(
+        R.string.history_water_stat_target_days_value,
+        stats.targetReachedDays,
+        stats.recordedDays
+    )
+    val showBarChart = chartEntries.size >= 2
 
     AppCard {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(modifier = Modifier.weight(1f)) {
-                SectionTitle(
-                    title = "Günlük su",
-                    subtitle = "Kesik çizgi kişisel ${formatter.format(stats.goalMl)} ml hedefini gösterir."
-                )
-            }
+        Column(modifier = Modifier.fillMaxWidth()) {
+            SectionTitle(
+                title = stringResource(R.string.history_water_title),
+                subtitle = stringResource(R.string.history_water_subtitle_goal, formatter.format(stats.goalMl))
+            )
             Text(
-                text = "${stats.targetReachedDays} gün",
-                style = MaterialTheme.typography.titleMedium,
-                color = appColors.water
+                text = stringResource(R.string.history_water_days_with_records, stats.recordedDays),
+                modifier = Modifier.padding(top = Spacing.xs),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         Spacer(modifier = Modifier.height(Spacing.sm))
         StatGrid(
             stats = listOf(
-                HistoryStat("Ortalama", "${formatter.format(stats.averageMl)} ml"),
-                HistoryStat("En düşük", "${formatter.format(stats.minMl)} ml"),
-                HistoryStat("En yüksek", "${formatter.format(stats.maxMl)} ml"),
-                HistoryStat("Hedef", "${stats.targetReachedDays} / ${stats.recordedDays}")
+                HistoryStat(stringResource(R.string.history_water_stat_avg), "${formatter.format(stats.averageMl)} ml"),
+                HistoryStat(stringResource(R.string.history_water_stat_min), "${formatter.format(stats.minMl)} ml"),
+                HistoryStat(stringResource(R.string.history_water_stat_max), "${formatter.format(stats.maxMl)} ml"),
+                HistoryStat(stringResource(R.string.history_water_stat_target_days), targetDaysLabel)
             )
         )
         Spacer(modifier = Modifier.height(Spacing.sm))
-        BarChart(
-            values = waterValues,
-            targetValue = stats.goalMl.toFloat(),
-            barColor = appColors.water,
-            summaryLabel = "Su kaydı olan ${stats.recordedDays} günün ortalaması ${formatter.format(stats.averageMl)} ml.",
-            startLabel = chartEntries.firstOrNull()?.date?.let(AppDateFormatter::shortDate),
-            endLabel = chartEntries.lastOrNull()?.date?.let(AppDateFormatter::shortDate),
-            targetLabel = "Hedef ${formatter.format(stats.goalMl)} ml",
-            contentDescription = "Su bar grafiği. Ortalama ${stats.averageMl} ml, hedefe ulaşılan gün sayısı ${stats.targetReachedDays}."
-        )
+        if (showBarChart) {
+            BarChart(
+                values = waterValues,
+                targetValue = stats.goalMl.toFloat(),
+                barColor = appColors.water,
+                summaryLabel = stringResource(
+                    R.string.history_water_summary_avg,
+                    stats.recordedDays,
+                    formatter.format(stats.averageMl)
+                ),
+                startLabel = chartEntries.firstOrNull()?.date?.let(AppDateFormatter::shortDate),
+                endLabel = chartEntries.lastOrNull()?.date?.let(AppDateFormatter::shortDate),
+                targetLabel = stringResource(R.string.today_water_goal_line, formatter.format(stats.goalMl)),
+                contentDescription = "Su bar grafiği. Ortalama ${stats.averageMl} ml, hedefe ulaşan gün ${stats.targetReachedDays} / ${stats.recordedDays}."
+            )
+        } else {
+            LowDataNoticeCard(
+                title = stringResource(R.string.history_water_low_data_title),
+                body = stringResource(R.string.history_water_low_data_body)
+            )
+        }
     }
 }
 
@@ -224,8 +247,8 @@ private fun WeightTrendCard(state: HistoryUiState) {
     val deltaText = stats.deltaKg?.let(::formatDeltaKg) ?: "${stats.recordedDays} kayıt"
     val deltaColor = stats.deltaKg?.let { delta ->
         when {
-            delta > 0.05 -> MaterialTheme.colorScheme.tertiary
-            delta < -0.05 -> MaterialTheme.colorScheme.primary
+            delta > 0.05 -> appColors.scoreMid
+            delta < -0.05 -> appColors.scoreHigh
             else -> MaterialTheme.colorScheme.onSurfaceVariant
         }
     } ?: MaterialTheme.colorScheme.onSurfaceVariant
@@ -300,10 +323,11 @@ private fun StatPill(
     value: String,
     modifier: Modifier = Modifier
 ) {
+    val appColors = MaterialTheme.appColors
     Box(
         modifier = modifier
             .clip(AppShapes.card)
-            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f))
+            .background(appColors.insightCardFill.copy(alpha = 0.88f))
             .padding(horizontal = Spacing.sm, vertical = Spacing.sm)
     ) {
         Column {

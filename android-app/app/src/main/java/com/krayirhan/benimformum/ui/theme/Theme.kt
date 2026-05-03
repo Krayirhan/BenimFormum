@@ -15,18 +15,18 @@ import androidx.compose.ui.platform.LocalContext
 import com.krayirhan.benimformum.domain.model.ThemePreference
 
 private val LightColorScheme = lightColorScheme(
-    primary = MintPrimary,
-    onPrimary = MintOnPrimary,
-    primaryContainer = MintPrimaryContainer,
-    onPrimaryContainer = MintOnPrimaryContainer,
-    secondary = AmberSecondary,
-    onSecondary = AmberOnSecondary,
-    secondaryContainer = AmberSecondaryContainer,
-    onSecondaryContainer = AmberOnSecondaryContainer,
-    tertiary = RoseTertiary,
-    onTertiary = RoseOnTertiary,
-    tertiaryContainer = RoseTertiaryContainer,
-    onTertiaryContainer = RoseOnTertiaryContainer,
+    primary = SteelPrimary,
+    onPrimary = SteelOnPrimary,
+    primaryContainer = SteelPrimaryContainer,
+    onPrimaryContainer = SteelOnPrimaryContainer,
+    secondary = SandSecondary,
+    onSecondary = SandOnSecondary,
+    secondaryContainer = SandSecondaryContainer,
+    onSecondaryContainer = SandOnSecondaryContainer,
+    tertiary = SageTertiary,
+    onTertiary = SageOnTertiary,
+    tertiaryContainer = SageTertiaryContainer,
+    onTertiaryContainer = SageOnTertiaryContainer,
     background = LightBackground,
     onBackground = LightOnBackground,
     surface = LightSurface,
@@ -66,6 +66,9 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LocalAppColorScheme = staticCompositionLocalOf { LightAppColorScheme }
 
+/** Uygulama teması (sistem veya Ayarlar); kart yüzeyleri için. */
+val LocalAppUsesDarkTheme = staticCompositionLocalOf { false }
+
 val MaterialTheme.appColors: AppColorScheme
     @Composable
     @ReadOnlyComposable
@@ -93,7 +96,11 @@ fun BenimFormumTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    CompositionLocalProvider(LocalAppColorScheme provides appColors) {
+
+    CompositionLocalProvider(
+        LocalAppColorScheme provides appColors,
+        LocalAppUsesDarkTheme provides darkTheme
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,

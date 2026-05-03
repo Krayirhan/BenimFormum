@@ -44,7 +44,7 @@ object AppDateFormatter {
         return when (hour) {
             in 5..11 -> "Günaydın"
             in 12..17 -> "İyi günler"
-            in 18..22 -> "İyi akşamlar"
+            in 18..23 -> "İyi akşamlar"
             else -> "İyi geceler"
         }
     }

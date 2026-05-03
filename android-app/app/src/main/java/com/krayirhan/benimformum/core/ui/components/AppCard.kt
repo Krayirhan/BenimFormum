@@ -10,11 +10,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.krayirhan.benimformum.core.ui.Spacing
-import com.krayirhan.benimformum.ui.theme.AppDesignTokens
 import com.krayirhan.benimformum.ui.theme.AppShapes
+import com.krayirhan.benimformum.ui.theme.FormHeroCardBorder
+import com.krayirhan.benimformum.ui.theme.FormHeroCardBorderDark
+import com.krayirhan.benimformum.ui.theme.FormHeroCardFill
+import com.krayirhan.benimformum.ui.theme.FormHeroCardFillDark
+import com.krayirhan.benimformum.ui.theme.FormTokens
+import com.krayirhan.benimformum.ui.theme.LocalAppUsesDarkTheme
+import com.krayirhan.benimformum.ui.theme.appColors
 
 enum class AppCardStyle {
     Standard,
@@ -28,15 +32,18 @@ fun AppCard(
     modifier: Modifier = Modifier,
     elevated: Boolean = false,
     style: AppCardStyle = AppCardStyle.Standard,
-    contentPadding: PaddingValues = PaddingValues(Spacing.md),
+    contentPadding: PaddingValues = PaddingValues(
+        horizontal = FormTokens.cardInnerHorizontal,
+        vertical = FormTokens.cardInnerVertical
+    ),
     content: @Composable () -> Unit
 ) {
+    val appColors = MaterialTheme.appColors
+    val darkTheme = LocalAppUsesDarkTheme.current
     val container = when (style) {
-        AppCardStyle.Hero -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = AppDesignTokens.cardHeroFillAlpha)
-        AppCardStyle.Metric -> MaterialTheme.colorScheme.surfaceContainerLow
-        AppCardStyle.Insight -> MaterialTheme.colorScheme.surfaceContainerHigh.copy(
-            alpha = AppDesignTokens.cardInsightFillAlpha
-        )
+        AppCardStyle.Hero -> if (darkTheme) FormHeroCardFillDark else FormHeroCardFill
+        AppCardStyle.Metric -> MaterialTheme.colorScheme.surface
+        AppCardStyle.Insight -> appColors.insightCardFill
         AppCardStyle.Standard -> if (elevated) {
             MaterialTheme.colorScheme.surfaceContainer
         } else {
@@ -44,13 +51,13 @@ fun AppCard(
         }
     }
     val borderColor = when (style) {
-        AppCardStyle.Hero -> MaterialTheme.colorScheme.primary.copy(alpha = AppDesignTokens.cardHeroBorderAlpha)
-        AppCardStyle.Metric -> MaterialTheme.colorScheme.outlineVariant
-        AppCardStyle.Insight -> MaterialTheme.colorScheme.outline.copy(alpha = 0.12f)
+        AppCardStyle.Hero -> if (darkTheme) FormHeroCardBorderDark else FormHeroCardBorder
+        AppCardStyle.Metric -> MaterialTheme.colorScheme.outline.copy(alpha = 0.28f)
+        AppCardStyle.Insight -> appColors.insightCardBorder.copy(alpha = 0.38f)
         AppCardStyle.Standard -> MaterialTheme.colorScheme.outlineVariant
     }
     val elevation = when (style) {
-        AppCardStyle.Hero -> CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 2.dp)
+        AppCardStyle.Hero -> CardDefaults.cardElevation(defaultElevation = 0.dp, pressedElevation = 0.dp)
         else -> CardDefaults.cardElevation(defaultElevation = 0.dp, pressedElevation = 0.dp)
     }
     Card(
@@ -61,7 +68,7 @@ fun AppCard(
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
         elevation = elevation,
-        border = BorderStroke(0.5.dp, borderColor)
+        border = BorderStroke(FormTokens.cardBorderWidth, borderColor)
     ) {
         Column(modifier = Modifier.padding(contentPadding)) {
             content()

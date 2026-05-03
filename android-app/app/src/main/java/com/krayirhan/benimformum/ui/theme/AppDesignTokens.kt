@@ -6,5 +6,4 @@ package com.krayirhan.benimformum.ui.theme
 object AppDesignTokens {
     const val cardHeroFillAlpha = 0.22f
     const val cardHeroBorderAlpha = 0.30f
-    const val cardInsightFillAlpha = 0.46f
 }

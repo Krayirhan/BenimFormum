@@ -52,6 +52,7 @@ fun ScoreCard(
         animationSpec = tween(durationMillis = 700),
         label = "scoreColor"
     )
+    val appColors = MaterialTheme.appColors
     val progress = animatedScore / 100f
     val helper = when {
         safeScore <= 0 -> "Bugünkü kaydını eklediğinde skorun burada görünecek."
@@ -79,9 +80,9 @@ fun ScoreCard(
                 CircularProgressIndicator(
                     progress = { 1f },
                     modifier = Modifier.size(96.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    color = appColors.heroScoreTrack,
                     strokeWidth = 8.dp,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                    trackColor = appColors.heroScoreTrack
                 )
                 CircularProgressIndicator(
                     progress = { progress },

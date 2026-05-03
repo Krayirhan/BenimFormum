@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.krayirhan.benimformum.ui.theme.appColors
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -26,9 +27,9 @@ fun BarChart(
     values: List<Float>,
     modifier: Modifier = Modifier,
     height: Dp = 120.dp,
-    barColor: Color = MaterialTheme.colorScheme.primary,
-    inactiveBarColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    gridColor: Color = MaterialTheme.colorScheme.outlineVariant,
+    barColor: Color? = null,
+    inactiveBarColor: Color? = null,
+    gridColor: Color? = null,
     targetValue: Float? = null,
     summaryLabel: String? = null,
     startLabel: String? = null,
@@ -36,6 +37,11 @@ fun BarChart(
     targetLabel: String? = null,
     contentDescription: String? = null
 ) {
+    val appColors = MaterialTheme.appColors
+    val scheme = MaterialTheme.colorScheme
+    val resolvedBar = barColor ?: appColors.progressAccent
+    val resolvedInactive = inactiveBarColor ?: appColors.heroScoreTrack
+    val resolvedGrid = gridColor ?: scheme.outlineVariant
     val semanticLabel = contentDescription
         ?: summaryLabel
         ?: "Bar grafik, ${values.size} veri noktası"
@@ -63,7 +69,7 @@ fun BarChart(
                     .fillMaxWidth()
                     .height(height)
             ) {
-                drawGrid(gridColor)
+                drawGrid(resolvedGrid)
                 val maxValue = (listOfNotNull(targetValue) + values).max().coerceAtLeast(1f)
                 val padTop = size.height * 0.10f
                 val padBot = size.height * 0.05f
@@ -77,7 +83,7 @@ fun BarChart(
                     val x = gap + index * (barWidth + gap)
                     val barHeight = (value / maxValue) * usableHeight
                     val y = padTop + (usableHeight - barHeight)
-                    val color = if (value > 0f) barColor else inactiveBarColor
+                    val color = if (value > 0f) resolvedBar else resolvedInactive
                     drawRoundedBar(
                         topLeft = Offset(x, y),
                         size = Size(barWidth, barHeight.coerceAtLeast(2.dp.toPx())),
@@ -88,7 +94,7 @@ fun BarChart(
                 if (targetValue != null && targetValue > 0f) {
                     val targetY = padTop + (1f - targetValue / maxValue) * usableHeight
                     drawLine(
-                        color = barColor.copy(alpha = 0.55f),
+                        color = resolvedBar.copy(alpha = 0.55f),
                         start = Offset(0f, targetY),
                         end = Offset(size.width, targetY),
                         strokeWidth = 1.5f,

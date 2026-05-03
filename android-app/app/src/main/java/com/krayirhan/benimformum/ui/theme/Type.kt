@@ -17,7 +17,7 @@ val NumericDisplayLarge = TextStyle(
 
 val NumericDisplayMedium = TextStyle(
     fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.SemiBold,
+    fontWeight = FontWeight.Medium,
     fontSize = 36.sp,
     lineHeight = 44.sp,
     letterSpacing = 0.sp,
@@ -47,7 +47,7 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 26.sp,
         lineHeight = 34.sp,
-        letterSpacing = (-0.35).sp
+        letterSpacing = (-0.28).sp
     ),
     headlineSmall = TextStyle(
         fontFamily = FontFamily.Default,
@@ -58,10 +58,10 @@ val Typography = Typography(
     ),
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
         lineHeight = 26.sp,
-        letterSpacing = (-0.2).sp
+        letterSpacing = (-0.12).sp
     ),
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -82,7 +82,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.2.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = FontFamily.Default,

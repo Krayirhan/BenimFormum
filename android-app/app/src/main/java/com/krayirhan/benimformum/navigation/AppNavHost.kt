@@ -40,10 +40,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -59,6 +61,7 @@ import com.krayirhan.benimformum.feature.onboarding.OnboardingScreen
 import com.krayirhan.benimformum.feature.report.WeeklySummaryScreen
 import com.krayirhan.benimformum.feature.settings.SettingsScreen
 import com.krayirhan.benimformum.feature.today.TodayScreen
+import com.krayirhan.benimformum.ui.theme.appColors
 
 @Composable
 fun AppNavHost(
@@ -79,7 +82,8 @@ fun AppNavHost(
 
 @Composable
 private fun AppLoadingScreen() {
-    val track = MaterialTheme.colorScheme.surfaceContainerHighest
+    val appColors = MaterialTheme.appColors
+    val track = appColors.heroScoreTrack
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -107,7 +111,11 @@ private fun AppLoadingScreen() {
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CircularProgressIndicator(modifier = Modifier.size(36.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier.size(36.dp),
+                    color = appColors.privacy,
+                    trackColor = appColors.heroScoreTrack
+                )
                 Column(modifier = Modifier.padding(start = 12.dp)) {
                     Surface(
                         modifier = Modifier
@@ -172,6 +180,7 @@ private fun MainTabsNavHost() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
     val currentTitle = tabs.firstOrNull { it.route == currentRoute }?.label ?: "Bugün"
+    val appColors = MaterialTheme.appColors
 
     fun navigate(route: String) {
         navController.navigate(route) {
@@ -187,7 +196,21 @@ private fun MainTabsNavHost() {
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        topBar = { TopAppBar(title = { Text(currentTitle) }) },
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        currentTitle,
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Medium)
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
+                )
+            )
+        },
         bottomBar = {
             if (!useRail) {
                 Column {
@@ -196,9 +219,9 @@ private fun MainTabsNavHost() {
                         color = MaterialTheme.colorScheme.outlineVariant
                     )
                     NavigationBar(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                        containerColor = MaterialTheme.colorScheme.background,
                         contentColor = MaterialTheme.colorScheme.onSurface,
-                        tonalElevation = 2.dp
+                        tonalElevation = 0.dp
                     ) {
                         tabs.forEach { tab ->
                             val selected = currentRoute == tab.route
@@ -213,11 +236,11 @@ private fun MainTabsNavHost() {
                                 },
                                 label = { Text(tab.label) },
                                 colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                    selectedTextColor = MaterialTheme.colorScheme.primary,
-                                    indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                    selectedIconColor = appColors.privacy,
+                                    selectedTextColor = appColors.privacy,
+                                    indicatorColor = appColors.privacyContainer,
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f),
+                                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f)
                                 )
                             )
                         }
@@ -233,7 +256,7 @@ private fun MainTabsNavHost() {
         ) {
             if (useRail) {
                 NavigationRail(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    containerColor = MaterialTheme.colorScheme.background,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ) {
                     tabs.forEach { tab ->
@@ -249,11 +272,11 @@ private fun MainTabsNavHost() {
                             },
                             label = { Text(tab.label) },
                             colors = NavigationRailItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                selectedTextColor = MaterialTheme.colorScheme.primary,
-                                indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                selectedIconColor = appColors.privacy,
+                                selectedTextColor = appColors.privacy,
+                                indicatorColor = appColors.privacyContainer,
+                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f),
+                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f)
                             )
                         )
                     }

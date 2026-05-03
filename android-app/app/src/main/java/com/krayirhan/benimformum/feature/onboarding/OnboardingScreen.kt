@@ -33,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,6 +63,7 @@ import com.krayirhan.benimformum.domain.model.TrackedMetric
 import com.krayirhan.benimformum.R
 import com.krayirhan.benimformum.ui.theme.BenimFormumTheme
 import com.krayirhan.benimformum.ui.theme.appColors
+import com.krayirhan.benimformum.ui.theme.brandFilterChipColors
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -163,9 +165,14 @@ fun OnboardingScreen(
         Spacer(modifier = Modifier.height(Spacing.md))
 
         if (currentStep > 0) {
+            val appColors = MaterialTheme.appColors
             TextButton(
                 onClick = { currentStep -= 1 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = appColors.privacy,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                )
             ) {
                 Text(text = stringResource(R.string.onboarding_back))
             }
@@ -290,7 +297,8 @@ private fun WaterGoalStep(
                         selected = waterGoalMl == preset,
                         onClick = { onWaterGoalChanged(preset) },
                         label = { Text("${formatter.format(preset)} ml") },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        colors = brandFilterChipColors()
                     )
                 }
             }
@@ -341,7 +349,7 @@ private fun ThemeStep(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
                 color = if (themePreference == option.preference) {
-                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f)
+                    appColors.privacyContainer.copy(alpha = 0.55f)
                 } else {
                     MaterialTheme.colorScheme.surface
                 },
@@ -355,7 +363,7 @@ private fun ThemeStep(
                         imageVector = option.icon,
                         contentDescription = null,
                         tint = if (themePreference == option.preference) {
-                            MaterialTheme.colorScheme.primary
+                            appColors.privacy
                         } else {
                             MaterialTheme.colorScheme.onSurfaceVariant
                         },
@@ -381,7 +389,7 @@ private fun ThemeStep(
                         Icon(
                             imageVector = Icons.Filled.Check,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = appColors.privacy,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -476,7 +484,8 @@ private fun MetricFilterChip(
                 modifier = Modifier.size(18.dp)
             )
         },
-        modifier = modifier
+        modifier = modifier,
+        colors = brandFilterChipColors()
     )
 }
 
@@ -485,6 +494,7 @@ private fun PageDots(
     pageCount: Int,
     currentPage: Int
 ) {
+    val appColors = MaterialTheme.appColors
     Row(
         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
@@ -504,7 +514,7 @@ private fun PageDots(
                     .clip(CircleShape)
                     .background(
                         if (selected) {
-                            MaterialTheme.colorScheme.primary
+                            appColors.privacy
                         } else {
                             MaterialTheme.colorScheme.surfaceVariant
                         }

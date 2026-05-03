@@ -71,7 +71,9 @@ import com.krayirhan.benimformum.core.ui.components.rememberSnackbarHostState
 import com.krayirhan.benimformum.domain.model.ThemePreference
 import com.krayirhan.benimformum.domain.model.TrackedMetric
 import com.krayirhan.benimformum.ui.theme.BenimFormumTheme
+import com.krayirhan.benimformum.ui.theme.FormSpacing
 import com.krayirhan.benimformum.ui.theme.appColors
+import com.krayirhan.benimformum.ui.theme.brandFilterChipColors
 import java.text.NumberFormat
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
@@ -241,7 +243,7 @@ fun SettingsScreen(
             SectionTitle(title = stringResource(R.string.settings_section_export))
             Spacer(modifier = Modifier.height(Spacing.sm))
 
-            AppCard {
+            AppCard(style = AppCardStyle.Insight) {
                 SectionTitle(
                     title = stringResource(R.string.settings_export_card_title),
                     subtitle = stringResource(R.string.settings_export_card_subtitle)
@@ -291,7 +293,7 @@ fun SettingsScreen(
 
             AboutCard(versionName = versionName)
 
-            Spacer(modifier = Modifier.height(Spacing.xl))
+            Spacer(modifier = Modifier.height(FormSpacing.bottomScrollComfort))
         }
 
         AppSnackbarHost(
@@ -395,7 +397,8 @@ private fun WaterGoalSettingsCard(
                             selected = waterGoalMl == preset,
                             onClick = { onWaterGoalChanged(preset) },
                             label = { Text("${formatter.format(preset)} ml") },
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            colors = brandFilterChipColors()
                         )
                     }
                 }
@@ -411,7 +414,7 @@ private fun ThemeSettingsCard(
     onThemePreferenceChanged: (ThemePreference) -> Unit,
     onDynamicColorChanged: (Boolean) -> Unit
 ) {
-    AppCard {
+    AppCard(style = AppCardStyle.Insight) {
         SectionTitle(
             title = stringResource(R.string.settings_theme_title),
             subtitle = stringResource(R.string.settings_theme_subtitle)
@@ -490,7 +493,7 @@ private fun TrackingSettingsCard(
         MetricPreferenceOption(TrackedMetric.NIGHT_SNACK, stringResource(R.string.metric_night_snack), Icons.Filled.Cookie)
     )
 
-    AppCard {
+    AppCard(style = AppCardStyle.Insight) {
         SectionTitle(
             title = stringResource(R.string.settings_tracking_title),
             subtitle = stringResource(R.string.settings_tracking_subtitle)
@@ -513,7 +516,8 @@ private fun TrackingSettingsCard(
                                     modifier = Modifier.size(18.dp)
                                 )
                             },
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            colors = brandFilterChipColors()
                         )
                     }
                 }
@@ -541,7 +545,8 @@ private fun ThemeChip(
                 modifier = Modifier.size(18.dp)
             )
         },
-        modifier = modifier
+        modifier = modifier,
+        colors = brandFilterChipColors()
     )
 }
 
@@ -553,7 +558,7 @@ private fun SettingsItemCard(
     title: String,
     description: String
 ) {
-    AppCard {
+    AppCard(style = AppCardStyle.Insight) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconBubble(icon, iconTint, iconBackground)
             Column(
@@ -579,16 +584,17 @@ private fun SettingsItemCard(
 
 @Composable
 private fun ValuePill(text: String) {
+    val appColors = MaterialTheme.appColors
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(999.dp))
-            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f))
+            .background(appColors.privacyContainer.copy(alpha = 0.72f))
             .padding(horizontal = 10.dp, vertical = 4.dp)
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = appColors.onPrivacyContainer
         )
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.krayirhan.benimformum.core.ui.Spacing
 import com.krayirhan.benimformum.core.ui.rememberAppHaptics
+import com.krayirhan.benimformum.ui.theme.appColors
 
 @Composable
 fun MetricSlider(
@@ -35,7 +36,8 @@ fun MetricSlider(
     }
 ) {
     val currentValueLabel = valueLabel(value)
-    val accent = MaterialTheme.colorScheme.primary
+    val appColors = MaterialTheme.appColors
+    val accent = appColors.privacy
     val rangeFloat = valueRange.first.toFloat()..valueRange.last.toFloat()
     val steps = (valueRange.last - valueRange.first - 1).coerceAtLeast(0)
     val haptics = rememberAppHaptics()
@@ -81,7 +83,7 @@ fun MetricSlider(
             colors = SliderDefaults.colors(
                 thumbColor = accent,
                 activeTrackColor = accent,
-                inactiveTrackColor = MaterialTheme.colorScheme.surfaceVariant,
+                inactiveTrackColor = appColors.heroScoreTrack,
                 activeTickColor = MaterialTheme.colorScheme.surface,
                 inactiveTickColor = MaterialTheme.colorScheme.outlineVariant
             ),

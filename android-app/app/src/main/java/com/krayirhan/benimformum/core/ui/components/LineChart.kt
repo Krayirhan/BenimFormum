@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.krayirhan.benimformum.ui.theme.appColors
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -30,15 +31,21 @@ fun LineChart(
     values: List<Float>,
     modifier: Modifier = Modifier,
     height: Dp = 140.dp,
-    lineColor: Color = MaterialTheme.colorScheme.primary,
-    fillTopColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.20f),
-    fillBottomColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0f),
-    gridColor: Color = MaterialTheme.colorScheme.outlineVariant,
+    lineColor: Color? = null,
+    fillTopColor: Color? = null,
+    fillBottomColor: Color? = null,
+    gridColor: Color? = null,
     summaryLabel: String? = null,
     startLabel: String? = null,
     endLabel: String? = null,
     contentDescription: String? = null
 ) {
+    val appColors = MaterialTheme.appColors
+    val scheme = MaterialTheme.colorScheme
+    val resolvedLine = lineColor ?: appColors.progressAccent
+    val resolvedFillTop = fillTopColor ?: resolvedLine.copy(alpha = 0.20f)
+    val resolvedFillBottom = fillBottomColor ?: resolvedLine.copy(alpha = 0f)
+    val resolvedGrid = gridColor ?: scheme.outlineVariant
     val points = values.filter { it.isFinite() }
     val semanticLabel = contentDescription
         ?: summaryLabel
@@ -69,7 +76,7 @@ fun LineChart(
                     .fillMaxWidth()
                     .height(height)
             ) {
-                drawGrid(gridColor)
+                drawGrid(resolvedGrid)
                 val maxV = points.max()
                 val minV = points.min()
                 val range = (maxV - minV).coerceAtLeast(0.0001f)
@@ -104,7 +111,7 @@ fun LineChart(
                 drawPath(
                     path = fillPath,
                     brush = Brush.verticalGradient(
-                        listOf(fillTopColor, fillBottomColor),
+                        listOf(resolvedFillTop, resolvedFillBottom),
                         startY = 0f,
                         endY = size.height
                     )
@@ -112,13 +119,13 @@ fun LineChart(
 
                 drawPath(
                     path = path,
-                    color = lineColor,
+                    color = resolvedLine,
                     style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
                 )
 
                 mapped.forEach { p ->
                     drawCircle(
-                        color = lineColor,
+                        color = resolvedLine,
                         radius = 3.dp.toPx(),
                         center = p
                     )

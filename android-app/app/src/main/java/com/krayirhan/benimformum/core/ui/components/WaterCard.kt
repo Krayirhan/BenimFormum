@@ -96,7 +96,7 @@ fun WaterCard(
                 .fillMaxWidth()
                 .padding(top = Spacing.md),
             color = appColors.water,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant
+            trackColor = appColors.heroScoreTrack
         )
         Row(
             modifier = Modifier

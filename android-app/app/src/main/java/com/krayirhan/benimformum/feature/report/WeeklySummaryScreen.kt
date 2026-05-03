@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +45,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.krayirhan.benimformum.R
 import com.krayirhan.benimformum.core.ui.Spacing
 import com.krayirhan.benimformum.core.ui.components.AppCard
 import com.krayirhan.benimformum.core.ui.components.AppCardStyle
@@ -52,6 +54,7 @@ import com.krayirhan.benimformum.domain.model.WeeklySummaryItem
 import com.krayirhan.benimformum.domain.model.WeeklySummaryTone
 import com.krayirhan.benimformum.ui.theme.AppShapes
 import com.krayirhan.benimformum.ui.theme.BenimFormumTheme
+import com.krayirhan.benimformum.ui.theme.FormSpacing
 import com.krayirhan.benimformum.ui.theme.NumericDisplayMedium
 import com.krayirhan.benimformum.ui.theme.NumericTitle
 import com.krayirhan.benimformum.ui.theme.appColors
@@ -80,9 +83,9 @@ fun WeeklySummaryScreen(
         isRefreshing = state.isRefreshing,
         onRefresh = viewModel::refresh
     ) {
-        Column {
+        Column(modifier = Modifier.fillMaxSize()) {
             Text(
-                text = "Son 7 günden kural tabanlı, sakin bir özet.",
+                text = stringResource(R.string.weekly_intro_line),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -108,9 +111,11 @@ fun WeeklySummaryScreen(
                 else -> {
                     Spacer(modifier = Modifier.height(Spacing.md))
                     LazyColumn(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(Spacing.md),
-                        contentPadding = PaddingValues(bottom = Spacing.xl)
+                        contentPadding = PaddingValues(bottom = FormSpacing.bottomScrollComfort)
                     ) {
                         item(key = "weekly-hero") {
                             WeeklyHeroCard(state)
@@ -127,7 +132,7 @@ fun WeeklySummaryScreen(
 
 @Composable
 private fun WeeklySummaryLoadingSkeleton() {
-    val track = MaterialTheme.colorScheme.surfaceContainerHighest
+    val track = MaterialTheme.appColors.heroScoreTrack
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -226,7 +231,7 @@ private fun WeeklyHeroCard(state: WeeklySummaryUiState) {
                     modifier = Modifier.size(88.dp),
                     color = appColors.progressAccent,
                     strokeWidth = 8.dp,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                    trackColor = appColors.heroScoreTrack
                 )
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(

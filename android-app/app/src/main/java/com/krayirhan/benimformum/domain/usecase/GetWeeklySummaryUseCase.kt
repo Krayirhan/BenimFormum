@@ -61,7 +61,7 @@ class GetWeeklySummaryUseCase @Inject constructor(
     ): WeeklySummaryItem {
         val description = when {
             recordedDays < MIN_DAYS_FOR_PATTERN ->
-                "Henüz kısa bir örneklem var; bu ekran kesin yorum yerine küçük sinyalleri gösterir."
+                "Henüz az veri var; bu özet yalnızca küçük sinyalleri gösterir."
 
             forms.isEmpty() ->
                 "Bu hafta yalnızca su kayıtların var; form alanları için yorum yapılmadı."
@@ -89,20 +89,20 @@ class GetWeeklySummaryUseCase @Inject constructor(
         val avgWater = waterTotals.map { it.totalMl }.averageOrNull()?.toInt() ?: 0
         val description = when {
             waterTotals.isEmpty() ->
-                "Bu hafta su kaydı yok. Hedefe göre yorum yapmak için önce birkaç kayıt gerekir."
+                "Bu hafta su kaydı yok. Özet için birkaç günlük kayıt yeterli olur."
 
             targetDays == 0 ->
-                "Kaydedilen günlerde hedefe ulaşılmadı; bunu baskı değil, ayar sinyali olarak düşünebilirsin."
+                "Kayıtlı günlerde su miktarın hedefinin altında kalmış. İstersen hedefini veya günlük ritmini Ayarlar’dan gözden geçirebilirsin."
 
             targetDays == waterTotals.size ->
-                "Su kaydı olan tüm günlerde kişisel hedefe ulaşıldı."
+                "Su kaydı olan tüm günlerde günlük hedefinin üzerindesin."
 
             else ->
-                "Kişisel su hedefin $targetDays gün karşılandı."
+                "Günlük su hedefinin üzerinde olduğun $targetDays gün var."
         }
 
         return WeeklySummaryItem(
-            title = "Su hedefi",
+            title = "Su (günlük hedef)",
             description = description,
             metric = if (waterTotals.isEmpty()) null else "$avgWater ml",
             tone = WeeklySummaryTone.WATER
@@ -123,7 +123,7 @@ class GetWeeklySummaryUseCase @Inject constructor(
                 "Enerji kayıtların haftanın genelinde yüksek tarafta kalmış."
 
             average != null && average <= 4.0 ->
-                "Enerji kayıtların düşük tarafta kalmış; burada yalnızca gözlem olarak gösterilir."
+                "Enerji kayıtların bu hafta daha alçak bantta; burada yalnızca gözlem olarak gösterilir."
 
             else ->
                 "Enerji kayıtların orta bantta, büyük bir uç göstermeden ilerlemiş."
@@ -173,7 +173,7 @@ class GetWeeklySummaryUseCase @Inject constructor(
                 "Bu hafta gece atıştırması alanı seçilmedi."
 
             snackDays == 0 ->
-                "İşaretlenen günlerde gece atıştırması görünmüyor."
+                "İşaretlenen günlerde gece atıştırması kaydı yok."
 
             else ->
                 "Gece atıştırması $snackDays gün işaretlendi; bu yalnızca örüntü olarak gösterilir."
@@ -219,7 +219,7 @@ class GetWeeklySummaryUseCase @Inject constructor(
     private fun dataScarcityItem(recordedDays: Int): WeeklySummaryItem {
         return WeeklySummaryItem(
             title = "Veri notu",
-            description = "Daha güvenilir örüntüler için 3-4 günlük kayıt yeterli olur; şu an $recordedDays gün üzerinden özetleniyor.",
+            description = "Grafik ve örüntüler için birkaç günlük kayıt yeterli olur; şu an $recordedDays gün üzerinden özetleniyor.",
             metric = null,
             tone = WeeklySummaryTone.NEUTRAL
         )
@@ -237,7 +237,7 @@ class GetWeeklySummaryUseCase @Inject constructor(
     private fun weeklyHelper(recordedDays: Int, waterTargetDays: Int, waterGoalMl: Int): String {
         return when {
             recordedDays < MIN_DAYS_FOR_PATTERN ->
-                "Bu özet $recordedDays günlük veriye dayanıyor; yorumlar özellikle temkinli tutuldu."
+                "Bu özet $recordedDays günlük veriye dayanıyor; bu yüzden yorumlar kısa tutuldu."
 
             waterTargetDays > 0 ->
                 "$waterGoalMl ml su hedefin $waterTargetDays gün karşılandı. Diğer metrikler yargısız gözlem olarak listelenir."
