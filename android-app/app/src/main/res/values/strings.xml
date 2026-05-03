@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">Benim Formum</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_app_title">Benim Formum</string>
+    <string name="onboarding_intro_subtitle">İlk ayarlarını seç, istersen sonra Ayarlar’dan değiştirebilirsin.</string>
+    <string name="onboarding_back">Geri</string>
+    <string name="onboarding_continue">Devam</string>
+    <string name="onboarding_start_today">Bugüne başla</string>
+    <string name="onboarding_defaults">Varsayılanlarla devam et</string>
+    <string name="onboarding_dot_a11y_selected">Kurulum adımı %1$d / %2$d, şu an bu adımdasınız</string>
+    <string name="onboarding_dot_a11y_not_selected">Kurulum adımı %1$d / %2$d</string>
+    <string name="onboarding_tracking_title">Neleri takip edeceksin?</string>
+    <string name="onboarding_tracking_desc">Sana anlamlı gelen alanları açık bırak. Boş bıraktığın metrikler Bugün ekranında yer kaplamaz.</string>
+    <string name="onboarding_water_title">Günlük su hedefin</string>
+    <string name="onboarding_water_desc">Varsayılan hedef 2.000 ml. Kendi ritmine göre düşük veya yüksek bir hedef seçebilirsin.</string>
+    <string name="onboarding_theme_title">Görünüm ve gizlilik</string>
+    <string name="onboarding_theme_desc">Tema tercihini seç. Verilerin hesap açmadan bu cihazda kalmaya devam eder.</string>
+    <string name="onboarding_theme_system">Sistem</string>
+    <string name="onboarding_theme_system_desc">Telefon ayarını takip eder.</string>
+    <string name="onboarding_theme_light">Açık</string>
+    <string name="onboarding_theme_light_desc">Aydınlık arayüz kullanır.</string>
+    <string name="onboarding_theme_dark">Koyu</string>
+    <string name="onboarding_theme_dark_desc">Koyu arayüz kullanır.</string>
+    <string name="onboarding_privacy_note">Kayıtların yerel veritabanında saklanır; bulut, hesap veya reklam takibi yok.</string>
+    <string name="onboarding_water_minus">-250</string>
+    <string name="onboarding_water_plus">+250</string>
+
+    <!-- Metrics (shared) -->
+    <string name="metric_water">Su</string>
+    <string name="metric_weight">Kilo</string>
+    <string name="metric_sleep">Uyku</string>
+    <string name="metric_energy">Enerji</string>
+    <string name="metric_mood">Ruh hâli</string>
+    <string name="metric_night_snack">Gece</string>
+
+    <!-- Today — başlıklar ve kritik CTA -->
+    <string name="today_header_fallback">Bugüne sakin bir başlangıç yapabilirsin.</string>
+    <string name="today_hero_score_suffix">/ 100</string>
+    <string name="today_hero_title">Günün ritmi</string>
+    <string name="today_hero_helper_none">Bugün için ilk küçük kaydını ekleyebilirsin.</string>
+    <string name="today_hero_helper_partial">Günün kaydı oluşuyor; eksik alanları sakin biçimde tamamlayabilirsin.</string>
+    <string name="today_hero_helper_complete">Bugünün temel alanları tamamlandı.</string>
+    <string name="today_hero_score_a11y">Günün formu, %1$d puan, 100 üzerinden</string>
+    <string name="today_completion_fields">%1$d / %2$d alan tamamlandı</string>
+    <string name="today_completion_a11y">Tamamlanan alanlar %1$d bölü %2$d, yüzde %3$d</string>
+    <string name="today_water_tracking">Su takibi</string>
+    <string name="today_water_goal_line">Hedef %1$s ml</string>
+    <string name="today_water_add_250">+250 ml</string>
+    <string name="today_water_add_500">+500 ml</string>
+    <string name="today_status_entered">Girildi</string>
+    <string name="today_status_missing">Eksik</string>
+    <string name="today_metric_not_selected">Seç</string>
+    <string name="today_metric_tile_a11y">%1$s%2$s, %3$s, %4$s</string>
+    <string name="today_metric_tile_a11y_selected_prefix">Seçili. </string>
+    <string name="today_save_metric">Kaydı kaydet</string>
+    <string name="today_save_day">Bugünkü kaydı kaydet</string>
+    <string name="today_weight_label">Kilo (isteğe bağlı)</string>
+    <string name="today_weight_unit">kg</string>
+    <string name="today_sleep_quality_label">Uyku kalitesi</string>
+    <string name="today_sleep_quality_helper">0 = atla • 5 = çok dinlenmiş</string>
+    <string name="today_skip">Atla</string>
+    <string name="today_sleep_value_format">%1$d / 5</string>
+    <string name="today_energy_value_format">%1$d / 10</string>
+    <string name="today_mood_value_format">%1$d / 5</string>
+    <string name="today_energy_label">Enerji</string>
+    <string name="today_energy_helper">1 = düşük • 10 = yüksek</string>
+    <string name="today_energy_value_unset">Seç</string>
+    <string name="today_mood_label">Ruh hâli</string>
+    <string name="today_mood_helper">1 = ağır • 5 = hafif</string>
+    <string name="today_night_snack_question">Bu akşam küçük bir atıştırma oldu mu?</string>
+    <string name="today_night_snack_unset">Henüz seçilmedi.</string>
+    <string name="today_no">Hayır</string>
+    <string name="today_yes">Evet</string>
+    <string name="today_note_title">Günün notu</string>
+    <string name="today_note_subtitle">İstersen kısa bir notla kaydı tamamlayabilirsin.</string>
+    <string name="today_note_field_label">Not (isteğe bağlı)</string>
+    <string name="today_editor_water_title">Su ekle</string>
+    <string name="today_editor_water_subtitle">Yukarıdaki su kartında da aynı kısayollar var; buradan da ekleyebilirsin.</string>
+    <string name="today_editor_weight_title">Kilo</string>
+    <string name="today_editor_weight_subtitle">İsteğe bağlı; boş bırakabilirsin.</string>
+    <string name="today_editor_sleep_subtitle">0 seçersen bu alanı atlamış olursun.</string>
+    <string name="today_editor_energy_subtitle">Bugünkü enerjini hızlıca işaretle.</string>
+    <string name="today_editor_mood_subtitle">Bugünkü ruh hâlini yargısızca not et.</string>
+    <string name="today_editor_night_snack_title">Gece atıştırması</string>
+    <string name="today_editor_night_snack_subtitle">Sadece bir örüntü olarak kaydedilir.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_subtitle">Hedeflerini, görünümü ve takip alanlarını buradan yönetebilirsin.</string>
+    <string name="settings_section_preferences">Tercihler</string>
+    <string name="settings_section_data_privacy">Veri ve gizlilik</string>
+    <string name="settings_section_export">Dışa aktar</string>
+    <string name="settings_section_about">Hakkında</string>
+    <string name="settings_water_card_title">Hedef su miktarı</string>
+    <string name="settings_water_card_subtitle">Bugün ekranındaki ilerleme bu hedefe göre hesaplanır.</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_subtitle">Sistem temasını takip edebilir veya görünümü sabitleyebilirsin.</string>
+    <string name="settings_theme_system">Sistem</string>
+    <string name="settings_theme_light">Açık</string>
+    <string name="settings_theme_dark">Koyu</string>
+    <string name="settings_dynamic_color_title">Material You renkleri</string>
+    <string name="settings_dynamic_color_subtitle">Android 12 ve üzeri: duvar kağıdı paletine uyum. Su ve metrik renkleri sabit kalır.</string>
+    <string name="settings_tracking_title">Takip alanları</string>
+    <string name="settings_tracking_subtitle">Kapattığın metrikler Bugün ekranındaki ızgarada ve tamamlanma sayacında görünmez.</string>
+    <string name="settings_data_title">Verilerim</string>
+    <string name="settings_data_desc">Günlük form ve su kayıtların yalnızca bu cihazda tutulur. Bulut veya hesap yok.</string>
+    <string name="settings_privacy_title">Gizlilik</string>
+    <string name="settings_privacy_desc">Veriler yerel veritabanında saklanır. Hesap, reklam veya üçüncü taraf paylaşımı yok.</string>
+    <string name="settings_export_card_title">Verilerin sende</string>
+    <string name="settings_export_card_subtitle">Dosyayı cihazında seçtiğin konuma kaydedebilirsin.</string>
+    <string name="settings_export_json">Tüm veriyi JSON olarak kaydet</string>
+    <string name="settings_export_csv_forms">Günlük formları CSV kaydet</string>
+    <string name="settings_export_csv_water">Su kayıtlarını CSV kaydet</string>
+    <string name="settings_export_footer">Dışa aktarma yereldir; veri yüklenmez, internet gerekmez.</string>
+    <string name="settings_about_app_line">%1$s — günlük form ve su takibi.</string>
+    <string name="settings_about_version">Sürüm %1$s</string>
+    <string name="settings_about_version_unknown">Sürüm bilgisi alınamadı.</string>
+    <string name="settings_about_privacy_placeholder">Ayrıntılı gizlilik metni veya politika bağlantısı buraya eklenebilir. Veriler yalnızca bu cihazda tutulur.</string>
+</resources>

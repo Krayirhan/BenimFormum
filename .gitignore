@@ -1,0 +1,51 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.iml
+
+# Local IDE state
+.idea/
+.vscode/
+.cursor/mcp.json
+
+# Android/Gradle generated state
+.gradle/
+.kotlin/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Generated build outputs anywhere in the workspace
+**/build/
+**/.gradle/
+**/.kotlin/
+**/captures/
+**/.externalNativeBuild/
+**/.cxx/
+
+# Local SDK and machine-specific configuration
+local.properties
+**/local.properties
+
+# Release/signing artifacts must not be committed
+*.apk
+*.aab
+*.ap_
+*.jks
+*.keystore
+*.p12
+*.pem
+
+# Legacy/generated project copy kept locally for reference only
+_legacy-root-android/
+
+# Local MCP Python environment (do not commit)
+mcp/.venv/
+
+# Android platform-tools bundle (local tooling only)
+android-app/tools/
+
+# Python bytecode
+**/__pycache__/
+*.pyc

@@ -1,0 +1,109 @@
+---
+description: Benim Formum project rules
+alwaysApply: true
+---
+
+# Benim Formum - Project Rules
+
+Benim Formum is a manual-first, local-first Android app for daily form tracking.
+
+## MVP Scope
+
+MVP includes:
+
+- Daily form entry
+- Water quick add
+- Weight input
+- Sleep quality input
+- Energy score input
+- Mood score input
+- Night snack tracking
+- Basic deterministic weekly summary
+- Plain Room database
+- DataStore for simple settings
+- Calm and non-judgmental UX tone
+
+## MVP Exclusions
+
+Do not implement these in MVP:
+
+- AI coaching
+- AI chat
+- Health Connect
+- Automatic step tracking
+- Wearable integration
+- SQLCipher
+- Biometric lock
+- Cloud sync
+- Advanced correlation analysis
+- Social features
+- Calorie database
+- Barcode scanning
+
+## Architecture
+
+Use Clean Architecture + MVVM.
+
+Data flow:
+
+UI → ViewModel → UseCase → Repository Interface → Repository Impl → DAO → Room
+
+## Strict Rules
+
+- Compose UI must not access DAO directly.
+- ViewModel must not access DAO directly.
+- ViewModel exposes immutable StateFlow.
+- Use cases contain business logic.
+- Repository interface lives in domain layer.
+- Repository implementation lives in data layer.
+- Room is the local source of truth.
+- Do not rewrite unrelated files.
+- Implement one vertical slice at a time.
+- Prefer small, testable changes.
+
+## MCP Usage
+
+Use MCP in this order:
+
+1. `benim-formum-docs`
+   - Use first.
+   - Reads local docs from D:\BenimFormum\docs.
+   - Best for coding tasks.
+
+2. `notebooklm-live`
+   - Use only when source-backed clarification is needed.
+   - Ask short, focused questions.
+   - Do not use it for every code change.
+
+## Coding Priority
+
+1. Cursor rules
+2. Local docs MCP
+3. NotebookLM live MCP
+4. Existing codebase
+
+## Project Paths
+
+Workspace root:
+
+D:\BenimFormum
+
+Android app root:
+
+D:\BenimFormum\android-app
+
+All Android, Kotlin, Gradle, Compose, Room, Hilt, DataStore, and Navigation changes must be made inside:
+
+D:\BenimFormum\android-app
+
+Do not create or modify Android project files in:
+
+D:\BenimFormum root
+
+Do not create another app module at workspace root.
+
+Correct build command:
+
+```powershell
+cd D:\BenimFormum\android-app
+.\gradlew.bat assembleDebug
